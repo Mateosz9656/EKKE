@@ -8,7 +8,7 @@ load_dotenv()
 
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI(title="Košice Model Educational Framework")
+app = FastAPI(title="EKKE Mentor MI Framework")
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,4 +22,4 @@ app.include_router(endpoints.router, prefix="/api")
 
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the Košice Model API"}
+    return {"message": "Welcome to the EKKE API"}
