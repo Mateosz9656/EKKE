@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKKE - Mentor MI Bejelentkezés</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {},
+            },
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center bg-[#0a0f1c] relative overflow-hidden text-slate-200">
+
+    <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-blue-900/30 blur-[120px]"></div>
+    <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-indigo-900/30 blur-[120px]"></div>
+
+    <svg width="0" height="0" class="absolute">
+        <filter id="remove-blue">
+            <feColorMatrix type="matrix" values="
+            1 0 0 0 0
+            1 0 0 0 0
+            1 0 0 0 0
+            1.5 0 -0.5 0 0
+            " />
+        </filter>
+    </svg>
+
+    <div class="z-10 w-full max-w-4xl mx-4 flex justify-center mb-0 px-4 md:px-0">
+        <img 
+            src="ekke-logo.jpg" 
+            alt="EKKE Logo" 
+            class="w-full max-h-[150px] object-contain object-bottom"
+            style="filter: url(#remove-blue)" 
+        />
+    </div>
+
+    <div class="bg-[#131b2f]/80 backdrop-blur-xl border border-slate-700/50 rounded-3xl shadow-2xl overflow-hidden w-full max-w-4xl flex flex-col md:flex-row min-h-[500px] z-10 mx-4 mt-2">
+
+        <div class="w-full md:w-5/12 bg-slate-900/50 p-8 flex flex-col justify-between border-b md:border-b-0 md:border-r border-slate-700/50 relative">
+            <div>
+                <h2 class="text-2xl font-bold mb-2 tracking-tight">Üdvözlünk</h2>
+                <p class="text-slate-400 text-sm mb-8">Kérjük, válaszd ki a bejelentkezés típusát.</p>
+
+                <div class="space-y-4" id="login-type-container">
+                    <button
+                        onclick="setLoginType('tanar')"
+                        id="btn-tanar"
+                        class="login-type-btn w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 border bg-blue-600/20 border-blue-500 shadow-[0_0_15px_rgba(59,130,246,0.15)]"
+                    >
+                        <div id="icon-bg-tanar" class="p-2 rounded-lg bg-blue-500/20 text-blue-400">
+                            <i data-lucide="user" class="w-5 h-5"></i>
+                        </div>
+                        <div class="text-left">
+                            <div id="text-title-tanar" class="font-semibold text-white">Tanár</div>
+                            <div class="text-xs text-slate-500">Oktatói belépés</div>
+                        </div>
+                    </button>
+
+                    <button
+                        onclick="setLoginType('diak')"
+                        id="btn-diak"
+                        class="login-type-btn w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 border bg-slate-800/50 border-slate-700/50 hover:bg-slate-800"
+                    >
+                        <div id="icon-bg-diak" class="p-2 rounded-lg bg-slate-700 text-slate-400">
+                            <i data-lucide="graduation-cap" class="w-5 h-5"></i>
+                        </div>
+                        <div class="text-left">
+                            <div id="text-title-diak" class="font-semibold text-slate-300">Diák</div>
+                            <div class="text-xs text-slate-500">Hallgatói belépés</div>
+                        </div>
+                    </button>
+
+                    <button
+                        onclick="setLoginType('admin')"
+                        id="btn-admin"
+                        class="login-type-btn w-full flex items-center gap-4 p-4 rounded-xl transition-all duration-300 border bg-slate-800/50 border-slate-700/50 hover:bg-slate-800"
+                    >
+                        <div id="icon-bg-admin" class="p-2 rounded-lg bg-slate-700 text-slate-400">
+                            <i data-lucide="shield-alert" class="w-5 h-5"></i>
+                        </div>
+                        <div class="text-left">
+                            <div id="text-title-admin" class="font-semibold text-slate-300">Admin</div>
+                            <div class="text-xs text-slate-500">Rendszergazdai belépés</div>
+                        </div>
+                    </button>
+                </div>
+            </div>
+
+            <div class="mt-12 flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity">
+                <img src="ekke-logo.jpg" alt="EKKE Logo" class="h-28 md:h-40 object-contain drop-shadow-xl" />
+            </div>
+        </div>
+
+        <div class="w-full md:w-7/12 p-8 md:p-12 flex flex-col justify-center">
+            <div class="max-w-sm w-full mx-auto">
+                <h3 id="form-title" class="text-3xl font-bold mb-8 text-white">
+                    Oktatói Belépés
+                </h3>
+
+                <form class="space-y-5" id="login-form">
+                    <div>
+                        <label id="username-label" class="block text-sm font-medium text-slate-300 mb-2">
+                            Email cím
+                        </label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
+                                <i data-lucide="mail" id="username-icon" class="w-[18px] h-[18px]"></i>
+                            </div>
+                            <input
+                                type="email"
+                                id="username"
+                                placeholder="pelda@uni-eszterhazy.hu"
+                                class="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-600 text-white"
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-300 mb-2">
+                            Jelszó
+                        </label>
+                        <div class="relative group">
+                            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-500 group-focus-within:text-blue-400 transition-colors">
+                                <i data-lucide="lock" class="w-[18px] h-[18px]"></i>
+                            </div>
+                            <input
+                                type="password"
+                                id="password"
+                                placeholder="••••••••"
+                                class="w-full pl-11 pr-4 py-3 bg-slate-900/50 border border-slate-700/50 rounded-xl focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all placeholder:text-slate-600 text-white"
+                                required
+                            />
+                        </div>
+                        <div id="error-message" class="text-red-400 text-sm mt-2 hidden"></div>
+                        <div class="flex justify-end mt-2">
+                            <a href="#" class="text-sm text-blue-400 hover:text-blue-300 transition-colors">
+                                Elfelejtetted a jelszavad?
+                            </a>
+                        </div>
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="w-full py-3.5 mt-4 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-medium rounded-xl shadow-lg shadow-blue-900/20 transition-all active:scale-[0.98]"
+                    >
+                        Bejelentkezés
+                    </button>
+                </form>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="js/login.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

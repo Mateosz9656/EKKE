@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKKE - Mentor MI</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {},
+            },
+        }
+    </script>
+
+    <link rel="stylesheet" href="css/styles.css">
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body class="flex h-screen bg-[#0a0f1c] text-slate-200 overflow-hidden font-sans">
+
+    <div id="sidebar" class="fixed md:relative z-20 flex flex-col h-full bg-[#0d1425] border-r border-slate-800 transition-all duration-300 ease-in-out w-72 translate-x-0">
+        <div class="flex flex-col h-full w-72">
+            <div class="p-4 border-b border-slate-800 flex justify-between items-center">
+                <h2 class="font-semibold text-slate-100 flex items-center gap-2">
+                    <i data-lucide="message-square" class="text-blue-500 w-[18px] h-[18px]"></i>
+                    Beszélgetések
+                </h2>
+                <button onclick="toggleSidebar()" class="md:hidden text-slate-400 hover:text-white transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <div class="p-4">
+                <button 
+                    onclick="createNewSession()"
+                    class="w-full flex items-center justify-center gap-2 bg-blue-600/10 hover:bg-blue-600/20 text-blue-400 border border-blue-500/30 rounded-xl py-3 px-4 font-medium transition-all"
+                >
+                    <i data-lucide="plus" class="w-[18px] h-[18px]"></i>
+                    Új beszélgetés
+                </button>
+            </div>
+
+            <div id="sessions-list" class="flex-1 overflow-y-auto px-3 pb-4 space-y-1 custom-scrollbar">
+
+            </div>
+        </div>
+    </div>
+
+    <div class="flex-1 flex flex-col h-full min-w-0 bg-[#0a0f1c] relative">
+
+        <div class="md:hidden p-4 border-b border-slate-800 flex items-center gap-3 bg-[#0d1425]">
+            <button onclick="toggleSidebar()" class="text-slate-400 hover:text-white transition-colors">
+                <i data-lucide="menu" class="w-6 h-6"></i>
+            </button>
+            <span id="mobile-session-title" class="font-medium text-slate-200 truncate">Beszélgetés</span>
+        </div>
+
+        <button 
+            id="desktop-sidebar-toggle"
+            onclick="toggleSidebar()" 
+            class="hidden absolute top-4 left-4 z-10 p-2 bg-slate-800/80 hover:bg-slate-700 text-slate-300 rounded-lg shadow-lg border border-slate-700 backdrop-blur-sm transition-all group"
+            title="Oldalsáv megnyitása"
+        >
+            <i data-lucide="menu" class="w-5 h-5 group-hover:scale-110 transition-transform"></i>
+        </button>
+
+        <div id="messages-container" class="flex-1 overflow-y-auto p-4 md:p-6 space-y-6">
+
+            <div id="empty-state" class="h-full flex flex-col items-center justify-center text-slate-500 space-y-4 hidden">
+                <div class="w-16 h-16 rounded-2xl bg-blue-500/10 flex items-center justify-center border border-blue-500/20">
+                    <i data-lucide="message-square" class="text-blue-400 w-8 h-8"></i>
+                </div>
+                <h3 class="text-xl font-medium text-slate-300">Miben segíthetek ma?</h3>
+                <p class="text-sm max-w-md text-center">Írj egy promptot a lenti mezőbe, hogy elkezdd a feladatmegoldást a mentor MI-vel.</p>
+            </div>
+        </div>
+
+        <div class="p-4 bg-gradient-to-t from-[#0a0f1c] via-[#0a0f1c] to-transparent pt-6 md:p-6 md:pt-8">
+            <form id="chat-form" class="relative max-w-4xl mx-auto flex items-end gap-2 bg-slate-800/80 backdrop-blur-md p-2 rounded-2xl border border-slate-700/50 shadow-xl focus-within:ring-2 focus-within:ring-blue-500/50 focus-within:border-blue-500/50 transition-all">
+                <textarea 
+                    id="chat-input"
+                    class="flex-1 bg-transparent max-h-48 min-h-[52px] p-3 text-slate-100 placeholder-slate-500 focus:outline-none resize-none overflow-y-auto custom-scrollbar"
+                    placeholder="Írd ide a promptodat... (Enter a küldéshez)"
+                    rows="1"
+                ></textarea>
+                <button 
+                    type="submit" 
+                    id="chat-submit"
+                    disabled
+                    class="mb-1 mr-1 bg-blue-600 hover:bg-blue-500 disabled:bg-slate-700 disabled:text-slate-500 disabled:cursor-not-allowed text-white p-3 rounded-xl transition-all shadow-md flex-shrink-0"
+                >
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><line x1="22" x2="11" y1="2" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </form>
+            <div class="text-center mt-2 text-xs text-slate-500">
+                Az MI hibázhat. Kérjük, ellenőrizze a fontos információkat.
+            </div>
+        </div>
+    </div>
+
+    <script src="js/student.js"></script>
+</body>
+</html>
